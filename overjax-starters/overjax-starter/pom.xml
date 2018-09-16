@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.infinityrefactoring.overjax</groupId>
+		<artifactId>overjax-dependencies</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../overjax-dependencies</relativePath>
+	</parent>
+	<artifactId>overjax-starter</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Overjax Starter</name>
+	<description>The Overjax starter, use it as the parent POM for your projects</description>
+
+	<properties>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.infinityrefactoring.overjax</groupId>
+			<artifactId>overjax-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.microprofile.config</groupId>
+			<artifactId>microprofile-config-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.microprofile.health</groupId>
+			<artifactId>microprofile-health-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.microprofile.metrics</groupId>
+			<artifactId>microprofile-metrics-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.microprofile.openapi</groupId>
+			<artifactId>microprofile-openapi-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.cache</groupId>
+			<artifactId>cache-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+		</dependency>
+	</dependencies>
+</project>

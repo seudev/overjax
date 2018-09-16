@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.infinityrefactoring.overjax</groupId>
+		<artifactId>overjax-root</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>overjax-dependencies</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Overjax Dependencies</name>
+	<description>The Overjax dependencies manager</description>
+
+	<properties>
+		<infinity-utils.version>0.0.1-SNAPSHOT</infinity-utils.version>
+		<message-interpolator.version>0.0.1-SNAPSHOT</message-interpolator.version>
+
+		<microprofile.config.version>1.2</microprofile.config.version>
+		<microprofile.health.version>1.0</microprofile.health.version>
+		<microprofile.metrics.version>1.1.1</microprofile.metrics.version>
+
+		<jaxrs.version>2.1.1</jaxrs.version>
+		<jcache.version>1.1.0</jcache.version>
+		<cdi.version>2.0</cdi.version>
+		<javaee.version>8.0</javaee.version>
+		<junit.version>4.12</junit.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.infinityrefactoring.overjax</groupId>
+				<artifactId>overjax-annotation</artifactId>
+				<version>${overjax.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.infinityrefactoring.overjax</groupId>
+				<artifactId>overjax-config</artifactId>
+				<version>${overjax.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.infinityrefactoring.overjax</groupId>
+				<artifactId>overjax-core</artifactId>
+				<version>${overjax.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.infinityrefactoring</groupId>
+				<artifactId>message-interpolator</artifactId>
+				<version>${message-interpolator.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.infinityrefactoring</groupId>
+				<artifactId>infinity-utils</artifactId>
+				<version>${infinity-utils.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.microprofile.config</groupId>
+				<artifactId>microprofile-config-api</artifactId>
+				<version>${microprofile.config.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.microprofile.health</groupId>
+				<artifactId>microprofile-health-api</artifactId>
+				<version>${microprofile.health.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.microprofile.metrics</groupId>
+				<artifactId>microprofile-metrics-api</artifactId>
+				<version>${microprofile.metrics.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.microprofile.openapi</groupId>
+				<artifactId>microprofile-openapi-api</artifactId>
+				<version>1.0.1</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>${jaxrs.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.cache</groupId>
+				<artifactId>cache-api</artifactId>
+				<version>${jcache.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.enterprise</groupId>
+				<artifactId>cdi-api</artifactId>
+				<version>${cdi.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>${javaee.version}</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

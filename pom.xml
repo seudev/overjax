@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.infinityrefactoring.overjax</groupId>
+	<artifactId>overjax-root</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Overjax</name>
+	<description>The Overjax is a library that goal to reduce the time development and maintenance of microservices</description>
+	<url>https://github.com/InfinityRefactoring/overjax</url>
+	<inceptionYear>2018</inceptionYear>
+
+	<organization>
+		<name>InfinityRefactoring</name>
+		<url>https://infinityrefactoring.com</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>ThomasSousa96</id>
+			<name>Thomás Sousa Silva</name>
+			<email>thomas.sousa.96@gmail.com</email>
+			<url>https://github.com/ThomasSousa96</url>
+			<organization>InfinityRefactoring</organization>
+			<organizationUrl>https://infinityrefactoring.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/InfinityRefactoring/overjax</url>
+		<connection>scm:git:https://github.com/InfinityRefactoring/overjax.git</connection>
+		<developerConnection>scm:git:https://github.com/InfinityRefactoring/overjax.git</developerConnection>
+		<tag>master</tag>
+	</scm>
+
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/InfinityRefactoring/overjax/issues</url>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<modules>
+		<module>overjax-dependencies</module>
+		<module>overjax-annotation</module>
+		<module>overjax-config</module>
+		<module>overjax-core</module>
+		<module>overjax-starters</module>
+	</modules>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<source.encoding>UTF-8</source.encoding>
+		<overjax.version>${project.version}</overjax.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
+	</properties>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.archetype</groupId>
+				<artifactId>archetype-packaging</artifactId>
+				<version>3.0.0</version>
+			</extension>
+		</extensions>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-archetype-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>overjax-release</id>
+
+			<distributionManagement>
+				<snapshotRepository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</snapshotRepository>
+				<repository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.8</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.0.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.10.4</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

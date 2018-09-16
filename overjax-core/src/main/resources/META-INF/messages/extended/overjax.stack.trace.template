@@ -1,0 +1,43 @@
+# HTTP Status ${httpStatusCode} - ${httpStatusReason}
+
+Occurred at: *${dateOfOcurrence}*
+ 
+## Request summary
+
+**${requestMethod}** `${requestAbsolutePath}`
+
+### Resource method
+```
+${resourceMethod}
+```
+
+## Description
+
+```
+${exceptionDescription}
+```
+
+## Stack trace
+
+```java
+${stackTrace}
+```
+
+## Request details
+
+### Request headers
+
+|Key|Value|
+|---|-----|
+${requestHeaders}
+
+### Request Params
+
+|Key|Value|
+|---|-----|
+${requestParams}
+
+### Request Body
+```
+${requestBody}
+```
