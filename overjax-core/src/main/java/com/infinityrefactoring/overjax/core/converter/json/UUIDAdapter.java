@@ -21,29 +21,29 @@ import com.infinityrefactoring.overjax.config.Configs;
 @Provider
 @ApplicationScoped
 public class UUIDAdapter implements JsonbAdapter<UUID, String> {
-
-	@Inject
-	private Logger logger;
-
-	@Override
-	public UUID adaptFromJson(String uuid) throws Exception {
-		if (logger.isLoggable(FINEST)) {
-			logger.finest("Parsing String to UUID: " + uuid);
-		}
-		return ((uuid == null) ? null : UUID.fromString(uuid));
-	}
-
-	@Override
-	public String adaptToJson(UUID uuid) throws Exception {
-		if (logger.isLoggable(FINEST)) {
-			logger.finest("Parsing UUID to String: " + uuid);
-		}
-		return ((uuid == null) ? null : uuid.toString());
-	}
-
-	public void register(@Observes @Priority(UUID_ADAPTER_JSONB_CONFIG) @Config(JSONB) JsonbConfig config) {
-		config.withAdapters(this);
-		Configs.log(logger, JSONB, "withAdapter", UUIDAdapter.class.getName());
-	}
-
+    
+    @Inject
+    private Logger logger;
+    
+    @Override
+    public UUID adaptFromJson(String uuid) throws Exception {
+        if (logger.isLoggable(FINEST)) {
+            logger.finest("Parsing String to UUID: " + uuid);
+        }
+        return ((uuid == null) ? null : UUID.fromString(uuid));
+    }
+    
+    @Override
+    public String adaptToJson(UUID uuid) throws Exception {
+        if (logger.isLoggable(FINEST)) {
+            logger.finest("Parsing UUID to String: " + uuid);
+        }
+        return ((uuid == null) ? null : uuid.toString());
+    }
+    
+    public void register(@Observes @Priority(UUID_ADAPTER_JSONB_CONFIG) @Config(JSONB) JsonbConfig config) {
+        config.withAdapters(this);
+        Configs.log(logger, JSONB, "withAdapter", UUIDAdapter.class.getName());
+    }
+    
 }

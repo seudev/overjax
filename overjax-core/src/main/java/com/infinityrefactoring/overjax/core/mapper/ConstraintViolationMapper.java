@@ -18,40 +18,44 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
 import com.infinityrefactoring.overjax.annotation.ExceptionHandling;
-import com.infinityrefactoring.overjax.core.model.ResponseWrapper;
+import com.infinityrefactoring.overjax.core.builder.MessageBuilder;
 
 @Provider
 @ApplicationScoped
 public class ConstraintViolationMapper extends AbstractThrowableMapper<ConstraintViolationException> {
-
-	private static final Status STATUS = PRECONDITION_FAILED;
-
-	@Inject
-	private Logger logger;
-
-	@Inject
-	@ExceptionHandling
-	private Event<ConstraintViolationException> constraintViolationExceptionEvent;
-
-	@Override
-	public Response toResponse(ConstraintViolationException ex) {
-		if (logger.isLoggable(FINE)) {
-			logger.log(FINE, getConcatenatedConstraintViolations(ex.getConstraintViolations()), ex);
-		}
-
-		constraintViolationExceptionEvent.fireAsync(ex);
-
-		if (showStackTrace(STATUS)) {
-			return stackTraceMapper.toResponse(ex, STATUS, getConcatenatedConstraintViolations(ex.getConstraintViolations()));
-		}
-		return Response.status(STATUS)
-				.entity(ResponseWrapper.empty().addAllErrors(ex))
-				.build();
-	}
-
-	private String getConcatenatedConstraintViolations(Set<ConstraintViolation<?>> constraintViolations) {
-		String concatenatedConstraintViolations = constraintViolations.stream().map(Object::toString).collect(joining(",\n    "));
-		return format("ConstraintViolations = [\n    %s\n]", concatenatedConstraintViolations);
-	}
-
+    
+    private static final Status STATUS = PRECONDITION_FAILED;
+    
+    @Inject
+    private Logger logger;
+    
+    @Inject
+    private MessageBuilder messageBuilder;
+    
+    @Inject
+    @ExceptionHandling
+    private Event<ConstraintViolationException> constraintViolationExceptionEvent;
+    
+    @Override
+    public Response toResponse(ConstraintViolationException ex) {
+        if (logger.isLoggable(FINE)) {
+            logger.log(FINE, getConcatenatedConstraintViolations(ex.getConstraintViolations()), ex);
+        }
+        
+        constraintViolationExceptionEvent.fireAsync(ex);
+        
+        if (showStackTrace(STATUS)) {
+            return stackTraceMapper.toResponse(ex, STATUS, getConcatenatedConstraintViolations(ex.getConstraintViolations()));
+        }
+        
+        ex.getConstraintViolations().forEach(messageBuilder::fromConstraintViolation);
+        
+        return Response.status(STATUS).build();
+    }
+    
+    private String getConcatenatedConstraintViolations(Set<ConstraintViolation<?>> constraintViolations) {
+        String concatenatedConstraintViolations = constraintViolations.stream().map(Object::toString).collect(joining(",\n    "));
+        return format("ConstraintViolations = [\n    %s\n]", concatenatedConstraintViolations);
+    }
+    
 }
