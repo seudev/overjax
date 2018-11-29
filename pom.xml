@@ -4,42 +4,51 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.infinityrefactoring.overjax</groupId>
+	<groupId>com.seudev.overjax</groupId>
 	<artifactId>overjax-root</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Overjax</name>
 	<description>The Overjax is a library that goal to reduce the time development and maintenance of microservices</description>
-	<url>https://github.com/InfinityRefactoring/overjax</url>
-	<inceptionYear>2018</inceptionYear>
+	<url>http://overjax.seudev.com</url>
+    <inceptionYear>2018</inceptionYear>
 
-	<organization>
-		<name>InfinityRefactoring</name>
-		<url>https://infinityrefactoring.com</url>
-	</organization>
+    <organization>
+        <name>Seudev</name>
+        <url>https://seudev.com</url>
+    </organization>
 
-	<developers>
-		<developer>
-			<id>ThomasSousa96</id>
-			<name>Thomás Sousa Silva</name>
-			<email>thomas.sousa.96@gmail.com</email>
-			<url>https://github.com/ThomasSousa96</url>
-			<organization>InfinityRefactoring</organization>
-			<organizationUrl>https://infinityrefactoring.com</organizationUrl>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <id>ThomasSousa96</id>
+            <name>Thomás Sousa Silva</name>
+            <email>thomas@seudev.com</email>
+            <url>http://thomas.seudev.com</url>
+            <organization>Seudev</organization>
+            <organizationUrl>https://seudev.com</organizationUrl>
+            <roles>
+                <role>Founder</role>
+                <role>Chief Executive Officer</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>America/Recife</timezone>
+            <properties>
+                <picUrl>https://seudev.com/img/member/ThomasSousa96.jpeg</picUrl>
+            </properties>
+        </developer>
+    </developers>
 
 	<scm>
-		<url>https://github.com/InfinityRefactoring/overjax</url>
-		<connection>scm:git:https://github.com/InfinityRefactoring/overjax.git</connection>
-		<developerConnection>scm:git:https://github.com/InfinityRefactoring/overjax.git</developerConnection>
+		<url>https://github.com/seudev/overjax</url>
+		<connection>scm:git:https://github.com/seudev/overjax.git</connection>
+		<developerConnection>scm:git:https://github.com/seudev/overjax.git</developerConnection>
 		<tag>master</tag>
 	</scm>
 
 	<issueManagement>
 		<system>Github</system>
-		<url>https://github.com/InfinityRefactoring/overjax/issues</url>
+		<url>https://github.com/seudev/overjax/issues</url>
 	</issueManagement>
 
 	<licenses>
