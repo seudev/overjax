@@ -5,7 +5,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.infinityrefactoring.overjax</groupId>
+		<groupId>com.seudev.overjax</groupId>
 		<artifactId>overjax-dependencies</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../overjax-dependencies</relativePath>
