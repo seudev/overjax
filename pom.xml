@@ -61,6 +61,7 @@
 
 	<modules>
 		<module>overjax-dependencies</module>
+		<module>overjax-data</module>
 		<module>overjax-annotation</module>
 		<module>overjax-config</module>
 		<module>overjax-core</module>
