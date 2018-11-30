@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.seudev.overjax</groupId>
+		<artifactId>overjax-starters</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../overjax-starters</relativePath>
+	</parent>
+	<artifactId>overjax-starter-data-jpa</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Overjax Starter Data JPA</name>
+	<description>The Overjax Stater Data JPA</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-cdi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.seudev.overjax</groupId>
+			<artifactId>overjax-data</artifactId>
+		</dependency>
+	</dependencies>
+</project>
