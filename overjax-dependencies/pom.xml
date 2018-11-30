@@ -18,7 +18,9 @@
 	<properties>
 		<hibernate.validator.version>6.0.13.Final</hibernate.validator.version>
 		<hibernate.orm.version>5.3.7.Final</hibernate.orm.version>
-
+		
+		<jdbc.postgresql.version>42.2.5</jdbc.postgresql.version>
+		
 		<infinity-utils.version>0.0.1-SNAPSHOT</infinity-utils.version>
 		<message-interpolator.version>0.0.1-SNAPSHOT</message-interpolator.version>
 
@@ -57,6 +59,24 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-c3p0</artifactId>
 				<version>${hibernate.orm.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${jdbc.postgresql.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.seudev.overjax</groupId>
+				<artifactId>overjax-starter-data-jpa-postgres</artifactId>
+				<version>${overjax.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.seudev.overjax</groupId>
+				<artifactId>overjax-starter-data-jpa</artifactId>
+				<version>${overjax.version}</version>
 			</dependency>
 
 			<dependency>

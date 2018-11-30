@@ -18,5 +18,7 @@
 
 	<modules>
 		<module>overjax-starter</module>
+		<module>overjax-starter-data-jpa</module>
+		<module>overjax-starter-data-jpa-postgres</module>
 	</modules>
 </project>
