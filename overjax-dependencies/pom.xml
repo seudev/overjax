@@ -16,6 +16,9 @@
 	<description>The Overjax dependencies manager</description>
 
 	<properties>
+		<hibernate.validator.version>6.0.13.Final</hibernate.validator.version>
+		<hibernate.orm.version>5.3.7.Final</hibernate.orm.version>
+
 		<infinity-utils.version>0.0.1-SNAPSHOT</infinity-utils.version>
 		<message-interpolator.version>0.0.1-SNAPSHOT</message-interpolator.version>
 
@@ -32,6 +35,36 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate.validator.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator-cdi</artifactId>
+				<version>${hibernate.validator.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.orm.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-c3p0</artifactId>
+				<version>${hibernate.orm.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.seudev.overjax</groupId>
+				<artifactId>overjax-data</artifactId>
+				<version>${overjax.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>com.seudev.overjax</groupId>
 				<artifactId>overjax-annotation</artifactId>
