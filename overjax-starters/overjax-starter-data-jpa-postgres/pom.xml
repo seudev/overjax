@@ -6,12 +6,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.seudev.overjax</groupId>
-		<artifactId>overjax-starter-data-jpa</artifactId>
+		<artifactId>overjax-starters</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../overjax-starter-data-jpa</relativePath>
+		<relativePath>../../overjax-starters</relativePath>
 	</parent>
 	<artifactId>overjax-starter-data-jpa-postgres</artifactId>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<name>Overjax Starter Data JPA Postgres</name>
 	<description>The Overjax Starter Data JPA for Postgres databases</description>
@@ -20,6 +20,11 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.seudev.overjax</groupId>
+			<artifactId>overjax-starter-data-jpa</artifactId>
 		</dependency>
 	</dependencies>
 </project>
