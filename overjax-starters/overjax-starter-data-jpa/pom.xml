@@ -11,7 +11,7 @@
 		<relativePath>../../overjax-starters</relativePath>
 	</parent>
 	<artifactId>overjax-starter-data-jpa</artifactId>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<name>Overjax Starter Data JPA</name>
 	<description>The Overjax Stater Data JPA</description>
