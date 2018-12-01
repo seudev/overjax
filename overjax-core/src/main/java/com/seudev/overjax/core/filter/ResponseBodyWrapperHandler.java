@@ -68,7 +68,10 @@ public class ResponseBodyWrapperHandler implements ContainerResponseFilter {
             
             Serializable metadata = responseMetadataBuilder.getMetadata();
             putMetaMessages(metadata);
-            body.setMeta(metadata);
+            
+            if ((metadata instanceof Map) && ((Map<?, ?>) metadata).isEmpty()) {
+                metadata = null;
+            }
             body.setMeta(metadata);
             responseContext.setEntity(body);
         }
