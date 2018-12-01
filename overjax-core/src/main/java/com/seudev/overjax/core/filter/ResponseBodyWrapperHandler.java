@@ -1,6 +1,6 @@
 package com.seudev.overjax.core.filter;
 
-import static com.seudev.overjax.config.ConfigProperties.RESPONSE_META_MESSAGES_KEY;
+import static com.seudev.overjax.config.ConfigProperties.RESPONSE_METADATA_MESSAGES_KEY;
 import static com.seudev.overjax.config.ProviderPriorities.RESPONSE_BODY_WRAPPER_HANDLER;
 import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
@@ -49,7 +49,7 @@ public class ResponseBodyWrapperHandler implements ContainerResponseFilter {
     private ResponseMetadataBuilder responseMetadataBuilder;
     
     @Inject
-    @ConfigProperty(name = RESPONSE_META_MESSAGES_KEY, defaultValue = "messages")
+    @ConfigProperty(name = RESPONSE_METADATA_MESSAGES_KEY, defaultValue = "messages")
     private String metaMessagesKey;
 
     @Override
