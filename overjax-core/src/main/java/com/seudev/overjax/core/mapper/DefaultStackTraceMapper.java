@@ -21,7 +21,7 @@ import javax.ws.rs.core.UriInfo;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.seudev.overjax.annotation.RequestBody;
-import com.seudev.overjax.core.filter.ResponseBodyHandler;
+import com.seudev.overjax.core.filter.ResponseBodyWrapperHandler;
 import com.seudev.util.message.MessageInterpolator;
 
 @RequestScoped
@@ -56,7 +56,7 @@ public class DefaultStackTraceMapper implements StackTraceMapper {
 
     @Override
     public Response toResponse(Throwable ex, StatusType status, String exceptionDescription) {
-        request.setAttribute(ResponseBodyHandler.SKIP_RESPONSE_WRAPPER, TRUE);
+        request.setAttribute(ResponseBodyWrapperHandler.SKIP_RESPONSE_WRAPPER, TRUE);
 
         String message = messageInterpolator.add("httpStatusCode", status.getStatusCode())
                 .add("httpStatusReason", status.getReasonPhrase())
