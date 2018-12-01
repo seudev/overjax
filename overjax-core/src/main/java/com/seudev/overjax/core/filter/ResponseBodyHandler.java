@@ -40,18 +40,18 @@ public class ResponseBodyHandler implements ContainerResponseFilter {
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
         if (responseContext.getStatus() != NO_CONTENT.getStatusCode()) {
+            if (responseContext.getEntity() == null) {
+                if (logger.isLoggable(FINEST)) {
+                    logger.finest("Using the default response entity: " + defaultEntity);
+                }
+                responseContext.setEntity(defaultEntity);
+            }
+            
             if (responseContext.getMediaType() == null) {
                 if (logger.isLoggable(FINEST)) {
                     logger.finest("Using the default response media type: " + defaultMediaType);
                 }
                 responseContext.setEntity(responseContext.getEntity(), responseContext.getEntityAnnotations(), defaultMediaType);
-            }
-            
-            if (responseContext.getEntity() == null) {
-                if (logger.isLoggable(FINEST)) {
-                    logger.finest("Using the default response entity: " + defaultEntity);
-                }
-                responseContext.setEntity(defaultEntity, responseContext.getEntityAnnotations(), responseContext.getMediaType());
             }
         }
     }
