@@ -17,26 +17,26 @@ import com.seudev.overjax.annotation.ExceptionHandling;
 @Provider
 @ApplicationScoped
 public class ThrowableMapper extends AbstractThrowableMapper<Throwable> {
-    
+
     private static final Status STATUS = INTERNAL_SERVER_ERROR;
-    
+
     @Inject
     private Logger logger;
-    
+
     @Inject
     @ExceptionHandling
     private Event<Throwable> throwableEvent;
-    
+
     @Override
-    public Response toResponse(Throwable ex) {
+    protected Response handle(Throwable ex) {
         logger.log(Level.SEVERE, ex.getMessage(), ex);
-        
+
         throwableEvent.fireAsync(ex);
-        
+
         if (showStackTrace(STATUS)) {
             return stackTraceMapper.toResponse(ex, STATUS, ex.getMessage());
         }
-        
+
         return Response.status(INTERNAL_SERVER_ERROR).build();
     }
     

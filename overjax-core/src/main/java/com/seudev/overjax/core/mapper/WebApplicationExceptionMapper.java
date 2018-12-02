@@ -22,24 +22,24 @@ import com.seudev.overjax.annotation.ExceptionHandling;
 @Provider
 @ApplicationScoped
 public class WebApplicationExceptionMapper extends AbstractThrowableMapper<WebApplicationException> {
-    
+
     @Inject
     private Logger logger;
-    
+
     @Inject
     @ExceptionHandling
     private Event<ClientErrorException> clientErrorExceptionEvent;
-    
+
     @Inject
     @ExceptionHandling
     private Event<RedirectionException> redirectionExceptionEvent;
-    
+
     @Inject
     @ExceptionHandling
     private Event<ServerErrorException> serverErrorExceptionEvent;
-    
+
     @Override
-    public Response toResponse(WebApplicationException ex) {
+    public Response handle(WebApplicationException ex) {
         if (ex instanceof ClientErrorException) {
             logger.log(FINE, ex.getMessage(), ex);
             clientErrorExceptionEvent.fireAsync((ClientErrorException) ex);
@@ -50,14 +50,14 @@ public class WebApplicationExceptionMapper extends AbstractThrowableMapper<WebAp
             logger.log(SEVERE, ex.getMessage(), ex);
             serverErrorExceptionEvent.fireAsync((ServerErrorException) ex);
         }
-        
+
         Response response = ex.getResponse();
         StatusType status = response.getStatusInfo();
-        
+
         if (showStackTrace(status)) {
             return stackTraceMapper.toResponse(ex, status, ex.getMessage());
         }
         return response;
     }
-    
+
 }

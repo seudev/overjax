@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Instant;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ResourceInfo;
@@ -24,40 +24,40 @@ import com.seudev.overjax.annotation.RequestBody;
 import com.seudev.overjax.core.filter.ResponseBodyWrapperHandler;
 import com.seudev.util.message.MessageInterpolator;
 
-@RequestScoped
+@ApplicationScoped
 public class DefaultStackTraceMapper implements StackTraceMapper {
-
+    
     @Context
     private UriInfo uriInfo;
-
+    
     @Context
     private ResourceInfo resourceInfo;
-
+    
     @Context
     private HttpHeaders httpHeaders;
-
+    
     @Inject
     private HttpServletRequest request;
-
+    
     @Inject
     @RequestBody
     private byte[] requestBody;
-
+    
     @Inject
     @ConfigProperty(name = STACK_TRACE_TEMPLATE_KEY, defaultValue = "overjax.stack.trace.template")
     private String templateKey;
-
+    
     @Inject
     @ConfigProperty(name = STACK_TRACE_TEMPLATE_TYPE, defaultValue = "text/markdown")
     private String templateType;
-
+    
     @Inject
     private MessageInterpolator messageInterpolator;
-
+    
     @Override
     public Response toResponse(Throwable ex, StatusType status, String exceptionDescription) {
         request.setAttribute(ResponseBodyWrapperHandler.SKIP_RESPONSE_WRAPPER, TRUE);
-
+        
         String message = messageInterpolator.add("httpStatusCode", status.getStatusCode())
                 .add("httpStatusReason", status.getReasonPhrase())
                 .add("dateOfOcurrence", Instant.now())
@@ -70,17 +70,17 @@ public class DefaultStackTraceMapper implements StackTraceMapper {
                 .add("exceptionDescription", ((exceptionDescription == null) ? "" : exceptionDescription))
                 .add("stackTrace", getStackTrace(ex))
                 .get(templateKey);
-
+        
         return Response.status(status)
                 .type(templateType)
                 .entity(message)
                 .build();
     }
-
+    
     protected String getRequestBody() {
         return ((requestBody == null) ? "" : new String(requestBody));
     }
-
+    
     protected String getRequestHeaders() {
         StringBuilder builder = new StringBuilder();
         httpHeaders.getRequestHeaders().forEach((key, listValue) -> {
@@ -93,7 +93,7 @@ public class DefaultStackTraceMapper implements StackTraceMapper {
         });
         return builder.toString();
     }
-
+    
     protected String getRequestParams() {
         StringBuilder builder = new StringBuilder();
         request.getParameterMap().forEach((key, arrayValue) -> {
@@ -106,12 +106,12 @@ public class DefaultStackTraceMapper implements StackTraceMapper {
         });
         return builder.toString();
     }
-
+    
     protected String getStackTrace(Throwable ex) {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         ex.printStackTrace(printWriter);
         return stringWriter.toString();
     }
-
+    
 }
