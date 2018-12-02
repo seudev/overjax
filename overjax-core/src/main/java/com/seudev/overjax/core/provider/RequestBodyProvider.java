@@ -1,6 +1,6 @@
 package com.seudev.overjax.core.provider;
 
-import static com.seudev.overjax.config.ConfigProperties.ENABLE_REQUEST_BODY_CACHE;
+import static com.seudev.overjax.config.ConfigProperties.REQUEST_BODY_CACHE_ENABLED;
 import static com.seudev.overjax.config.ConfigProperties.REQUEST_BODY_CACHE_BUFFER_SIZE;
 import static com.seudev.overjax.config.ProviderPriorities.REQUEST_BODY_PROVIDER;
 
@@ -32,8 +32,8 @@ public class RequestBodyProvider implements ContainerRequestFilter {
     private Logger logger;
     
     @Inject
-    @ConfigProperty(name = ENABLE_REQUEST_BODY_CACHE, defaultValue = "false")
-    private boolean enableRequestBodyCache;
+    @ConfigProperty(name = REQUEST_BODY_CACHE_ENABLED, defaultValue = "false")
+    private boolean requestBodyCacheEnabled;
     
     @Inject
     @ConfigProperty(name = REQUEST_BODY_CACHE_BUFFER_SIZE, defaultValue = "512")
@@ -43,7 +43,7 @@ public class RequestBodyProvider implements ContainerRequestFilter {
     
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        if (enableRequestBodyCache) {
+        if (requestBodyCacheEnabled) {
             logger.finest("Caching the request requestBody.");
             
             requestBody = readBody(requestContext);
