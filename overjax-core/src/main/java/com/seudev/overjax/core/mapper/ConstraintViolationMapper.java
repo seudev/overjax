@@ -37,19 +37,19 @@ public class ConstraintViolationMapper extends AbstractThrowableMapper<Constrain
     private Event<ConstraintViolationException> constraintViolationExceptionEvent;
 
     @Override
-    public Response toResponse(ConstraintViolationException ex) {
+    protected Response handle(ConstraintViolationException ex) {
         if (logger.isLoggable(FINE)) {
             logger.log(FINE, getConcatenatedConstraintViolations(ex.getConstraintViolations()), ex);
         }
-
+        
         constraintViolationExceptionEvent.fireAsync(ex);
-
+        
         if (showStackTrace(STATUS)) {
             return stackTraceMapper.toResponse(ex, STATUS, getConcatenatedConstraintViolations(ex.getConstraintViolations()));
         }
-
+        
         ex.getConstraintViolations().forEach(messageBuilder::fromConstraintViolation);
-
+        
         return Response.status(STATUS).build();
     }
 
