@@ -8,22 +8,19 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.enterprise.inject.Stereotype;
 import javax.enterprise.util.Nonbinding;
 import javax.ws.rs.NameBinding;
 
-@Stereotype
 @Documented
 @NameBinding
-@Authenticated
 @Target({TYPE, METHOD})
 @Retention(RUNTIME)
 public @interface Authorize {
-
+    
     @Nonbinding
     Property[] properties() default {};
-    
+
     @Nonbinding
     String value();
-    
+
 }

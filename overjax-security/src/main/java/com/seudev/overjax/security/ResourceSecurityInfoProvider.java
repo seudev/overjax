@@ -36,7 +36,7 @@ public class ResourceSecurityInfoProvider {
 
     @Context
     private ResourceInfo resourceInfo;
-    
+
     @Produces
     public ResourceSecurityInfo getResourceSecurityInfo() {
         Method resourceMethod = resourceInfo.getResourceMethod();
@@ -54,6 +54,7 @@ public class ResourceSecurityInfoProvider {
         public ResourceSecurityInfo getResourceSecurityInfo(@CacheKey String resourceMethodName, Method resourceMethod, Class<?> resourceClass) {
             validateSecurityDefinition(resourceMethod);
             validateSecurityDefinition(resourceClass);
+            validateSecurityDefinition(resourceMethod, resourceClass);
 
             ResourceSecurityInfo resourceSecurityInfo = getResourceSecurityInfo(resourceMethod, resourceMethod, resourceClass);
 
@@ -62,7 +63,7 @@ public class ResourceSecurityInfoProvider {
             }
             return resourceSecurityInfo;
         }
-        
+
         private ResourceSecurityInfo getResourceSecurityInfo(AnnotatedElement annotatedElement, Method resourceMethod, Class<?> resourceClass) {
             if (annotatedElement.isAnnotationPresent(DenyAll.class)) {
                 return ResourceSecurityInfo.DENIED;
@@ -73,7 +74,7 @@ public class ResourceSecurityInfoProvider {
             if (authenticated != null) {
                 Map<String, String> authenticationProperties = Stream.of(authenticated.properties())
                         .collect(toMap(Property::key, Property::value));
-                
+
                 Authorize authorize = resourceMethod.getAnnotation(Authorize.class);
                 Map<String, String> authorizationProperties;
                 String authorizeExpression;
@@ -99,23 +100,33 @@ public class ResourceSecurityInfoProvider {
             }
             return ResourceSecurityInfo.PUBLIC;
         }
-        
+
         private void validateSecurityDefinition(AnnotatedElement annotatedElement) {
             DenyAll denyAll = annotatedElement.getAnnotation(DenyAll.class);
             PermitAll permitAll = annotatedElement.getAnnotation(PermitAll.class);
-            
+
             if ((denyAll != null) && (permitAll != null)) {
                 throw new InternalServerErrorException(format("The %s element has oposite annotations: @DenyAll and @PermitAll."
                         + "This annotations cannot be used simultaneously.", annotatedElement));
             }
-            
+
             Authenticated authenticated = annotatedElement.getAnnotation(Authenticated.class);
             if ((authenticated != null) && (permitAll != null)) {
                 throw new InternalServerErrorException(format("The %s element has oposite annotations: @Authenticated and @PermitAll."
                         + "This annotations cannot be used simultaneously.", annotatedElement));
             }
         }
-        
+
+        private void validateSecurityDefinition(Method resourceMethod, Class<?> resourceClass) {
+            if ((resourceMethod.isAnnotationPresent(Authorize.class) || resourceClass.isAnnotationPresent(Authorize.class))
+                    && ((!resourceMethod.isAnnotationPresent(Authenticated.class)) && (!resourceClass.isAnnotationPresent(Authenticated.class)))) {
+
+                throw new InternalServerErrorException(format("The @Authorize annotation on the  %s method depends of the @Authenticated annotation, "
+                        + "but it is not present. Use the @Authenticated annotation on this method or on the class.",
+                        resourceMethod));
+            }
+        }
+
     }
-    
+
 }
