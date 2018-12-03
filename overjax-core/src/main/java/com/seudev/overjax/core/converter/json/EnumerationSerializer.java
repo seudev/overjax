@@ -22,13 +22,13 @@ import com.seudev.util.Enumeration;
 @Provider
 @RequestScoped
 public class EnumerationSerializer extends NamedIdentifiableSerializer<Enumeration<?, ?>> {
-    
+
     @Inject
     private Logger logger;
-    
+
     public void register(@Observes @Priority(ENUMERATION_SERIALIZER_JSONB_CONFIG) @Config(JSONB) JsonbConfig config) {
         config.withSerializers(this);
         Configs.log(logger, JSONB, "withSerializer", EnumerationSerializer.class.getName());
     }
-    
+
 }

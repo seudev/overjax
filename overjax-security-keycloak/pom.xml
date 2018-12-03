@@ -10,31 +10,31 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../overjax-dependencies</relativePath>
 	</parent>
-	<artifactId>overjax-security</artifactId>
+	<artifactId>overjax-security-keycloak</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Overjax Security</name>
-	<description>The Overjax Security</description>
+	<name>Overjax Security Keycloak</name>
+	<description>The Overjax Security Keycloak</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.seudev</groupId>
-			<artifactId>infinity-utils</artifactId>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-servlet-filter-adapter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-adapter-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.microprofile.config</groupId>
+			<artifactId>microprofile-config-api</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>com.seudev.overjax</groupId>
-			<artifactId>overjax-annotation</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.seudev.overjax</groupId>
-			<artifactId>overjax-config</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.cache</groupId>
-			<artifactId>cache-api</artifactId>
+			<artifactId>overjax-security</artifactId>
 		</dependency>
 
 		<dependency>

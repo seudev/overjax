@@ -17,6 +17,7 @@ import javax.cache.annotation.CacheDefaults;
 import javax.cache.annotation.CacheKey;
 import javax.cache.annotation.CacheResult;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.literal.NamedLiteral;
 import javax.inject.Inject;
 import javax.ws.rs.InternalServerErrorException;
@@ -36,8 +37,10 @@ public class ResourceSecurityInfoProvider {
     @Context
     private ResourceInfo resourceInfo;
     
+    @Produces
     public ResourceSecurityInfo getResourceSecurityInfo() {
-        return provider.getResourceSecurityInfo(resourceInfo.getResourceMethod(), resourceInfo.getResourceClass());
+        Method resourceMethod = resourceInfo.getResourceMethod();
+        return provider.getResourceSecurityInfo(resourceMethod.toString(), resourceMethod, resourceInfo.getResourceClass());
     }
 
     @ApplicationScoped
@@ -48,15 +51,14 @@ public class ResourceSecurityInfoProvider {
         private Logger logger;
 
         @CacheResult
-        public ResourceSecurityInfo getResourceSecurityInfo(@CacheKey Method resourceMethod, @CacheKey Class<?> resourceClass) {
+        public ResourceSecurityInfo getResourceSecurityInfo(@CacheKey String resourceMethodName, Method resourceMethod, Class<?> resourceClass) {
             validateSecurityDefinition(resourceMethod);
             validateSecurityDefinition(resourceClass);
-            validateSecurityDefinition(resourceMethod, resourceClass);
 
             ResourceSecurityInfo resourceSecurityInfo = getResourceSecurityInfo(resourceMethod, resourceMethod, resourceClass);
 
             if (logger.isLoggable(FINEST)) {
-                logger.finest(format("Applied security info for the %s method: %s", resourceMethod, resourceSecurityInfo));
+                logger.finest(format("Applied security info for the %s method:\n%s\n", resourceMethodName, resourceSecurityInfo));
             }
             return resourceSecurityInfo;
         }
@@ -74,17 +76,23 @@ public class ResourceSecurityInfoProvider {
                 
                 Authorize authorize = resourceMethod.getAnnotation(Authorize.class);
                 Map<String, String> authorizationProperties;
+                String authorizeExpression;
                 if (authorize == null) {
                     authorize = resourceClass.getAnnotation(Authorize.class);
+                }
+
+                if (authorize == null) {
+                    authorizeExpression = null;
                     authorizationProperties = emptyMap();
                 } else {
+                    authorizeExpression = authorize.value();
                     authorizationProperties = Stream.of(authenticated.properties())
                             .collect(toMap(Property::key, Property::value));
                 }
 
                 return new ResourceSecurityInfo(false, false,
-                        NamedLiteral.of(authorize.value()),
-                        authorize.value(),
+                        NamedLiteral.of(authenticated.provider().value()),
+                        authorizeExpression,
                         authenticationProperties, authorizationProperties);
             } else if (annotatedElement == resourceMethod) {
                 return getResourceSecurityInfo(resourceClass, resourceMethod, resourceClass);
@@ -105,17 +113,6 @@ public class ResourceSecurityInfoProvider {
             if ((authenticated != null) && (permitAll != null)) {
                 throw new InternalServerErrorException(format("The %s element has oposite annotations: @Authenticated and @PermitAll."
                         + "This annotations cannot be used simultaneously.", annotatedElement));
-            }
-        }
-        
-        private void validateSecurityDefinition(Method resourceMethod, Class<?> resourceClass) {
-            // TODO test if is necessary
-            if ((resourceMethod.isAnnotationPresent(Authorize.class) || resourceClass.isAnnotationPresent(Authorize.class))
-                    && ((!resourceMethod.isAnnotationPresent(Authenticated.class)) && (!resourceClass.isAnnotationPresent(Authenticated.class)))) {
-
-                throw new InternalServerErrorException(format("The @Authorize annotation on the  %s method depends of the @Authenticated annotation, "
-                        + "but it is not present. Use the @Authenticated annotation on this method or on your class.",
-                        resourceMethod));
             }
         }
         

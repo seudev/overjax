@@ -61,10 +61,12 @@
 
 	<modules>
 		<module>overjax-dependencies</module>
-		<module>overjax-data</module>
 		<module>overjax-annotation</module>
 		<module>overjax-config</module>
 		<module>overjax-core</module>
+		<module>overjax-data</module>
+		<module>overjax-security</module>
+		<module>overjax-security-keycloak</module>
 		<module>overjax-starters</module>
 	</modules>
 

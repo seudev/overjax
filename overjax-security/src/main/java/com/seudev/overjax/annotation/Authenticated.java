@@ -14,8 +14,8 @@ import javax.ws.rs.NameBinding;
 
 @Documented
 @NameBinding
-@Target({TYPE, METHOD})
 @Retention(RUNTIME)
+@Target({TYPE, METHOD})
 public @interface Authenticated {
     
     @Nonbinding

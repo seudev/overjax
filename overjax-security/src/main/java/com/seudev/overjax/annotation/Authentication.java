@@ -13,7 +13,7 @@ import com.seudev.overjax.security.AuthenticationType;
 @Documented
 @Retention(RUNTIME)
 public @interface Authentication {
-
+    
     AuthenticationType value();
-
+    
 }

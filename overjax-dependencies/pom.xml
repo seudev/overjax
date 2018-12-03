@@ -16,6 +16,8 @@
 	<description>The Overjax dependencies manager</description>
 
 	<properties>
+		<keycloak.version>4.6.0.Final</keycloak.version>
+
 		<hibernate.validator.version>6.0.13.Final</hibernate.validator.version>
 		<hibernate.orm.version>5.3.7.Final</hibernate.orm.version>
 
@@ -28,6 +30,9 @@
 		<microprofile.health.version>1.0</microprofile.health.version>
 		<microprofile.metrics.version>1.1.1</microprofile.metrics.version>
 
+		<javax.el.version>3.0.1-b06</javax.el.version>
+		<glassfish.javax.el.version>3.0.1-b10</glassfish.javax.el.version>
+
 		<jaxrs.version>2.1.1</jaxrs.version>
 		<jcache.version>1.1.0</jcache.version>
 		<cdi.version>2.0</cdi.version>
@@ -37,6 +42,18 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.keycloak</groupId>
+				<artifactId>keycloak-servlet-filter-adapter</artifactId>
+				<version>${keycloak.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.keycloak</groupId>
+				<artifactId>keycloak-adapter-core</artifactId>
+				<version>${keycloak.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.hibernate.validator</groupId>
 				<artifactId>hibernate-validator</artifactId>
@@ -76,6 +93,12 @@
 			<dependency>
 				<groupId>com.seudev.overjax</groupId>
 				<artifactId>overjax-starter-data-jpa</artifactId>
+				<version>${overjax.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.seudev.overjax</groupId>
+				<artifactId>overjax-security-keycloak</artifactId>
 				<version>${overjax.version}</version>
 			</dependency>
 
@@ -146,6 +169,19 @@
 				<groupId>org.eclipse.microprofile.openapi</groupId>
 				<artifactId>microprofile-openapi-api</artifactId>
 				<version>1.0.1</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish</groupId>
+				<artifactId>javax.el</artifactId>
+				<version>${glassfish.javax.el.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>javax.el-api</artifactId>
+				<version>${javax.el.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
