@@ -18,10 +18,15 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.seudev</groupId>
+			<artifactId>infinity-utils</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.eclipse.microprofile.config</groupId>
 			<artifactId>microprofile-config-api</artifactId>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
