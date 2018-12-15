@@ -4,7 +4,7 @@ import static com.seudev.overjax.security.AuthenticationType.AUTHENTICATED;
 import static com.seudev.overjax.security.AuthenticationType.DENIED_ACCESS;
 import static com.seudev.overjax.security.AuthenticationType.EXPIRED;
 import static com.seudev.overjax.security.AuthenticationType.INVALID;
-import static com.seudev.overjax.security.AuthenticationType.LIBERTATED_ACCESS;
+import static com.seudev.overjax.security.AuthenticationType.LIBERATED_ACCESS;
 import static com.seudev.overjax.security.AuthenticationType.NO_AUTHENTICATION;
 import static com.seudev.overjax.security.TokenAuthentication.deniedAccess;
 import static com.seudev.overjax.security.TokenAuthentication.invalid;
@@ -56,7 +56,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     private Event<TokenAuthentication> deniedAccessEvent;
 
     @Inject
-    @Authentication(LIBERTATED_ACCESS)
+    @Authentication(LIBERATED_ACCESS)
     private Event<TokenAuthentication> liberatedAccessEvent;
 
     @Inject
@@ -105,7 +105,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                         case DENIED_ACCESS:
                             denyRequest(requestContext);
                             break;
-                        case LIBERTATED_ACCESS:
+                        case LIBERATED_ACCESS:
                             liberatedAccess();
                             break;
                         default:

@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class TokenAuthentication {
     
-    private static final TokenAuthentication LIBERTATED_ACCESS = new TokenAuthentication(AuthenticationType.LIBERTATED_ACCESS, null, null, null, null);
+    private static final TokenAuthentication LIBERTATED_ACCESS = new TokenAuthentication(AuthenticationType.LIBERATED_ACCESS, null, null, null, null);
     private static final TokenAuthentication NO_AUTHENTICATION = new TokenAuthentication(AuthenticationType.NO_AUTHENTICATION, null, null, null, null);
     private static final TokenAuthentication DENIED_ACCESS = new TokenAuthentication(AuthenticationType.DENIED_ACCESS, null, null, null, null);
     
