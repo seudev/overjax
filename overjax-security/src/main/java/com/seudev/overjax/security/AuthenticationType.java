@@ -3,7 +3,7 @@ package com.seudev.overjax.security;
 public enum AuthenticationType {
 
     DENIED_ACCESS,
-    LIBERTATED_ACCESS,
+    LIBERATED_ACCESS,
     NO_AUTHENTICATION,
     INVALID,
     EXPIRED,
