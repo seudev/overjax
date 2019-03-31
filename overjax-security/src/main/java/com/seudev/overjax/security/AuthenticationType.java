@@ -2,7 +2,7 @@ package com.seudev.overjax.security;
 
 public enum AuthenticationType {
 
-    DENIED_ACCESS,
+    ACCESS_DENIED,
     PUBLIC_ACCESS,
     NO_AUTHENTICATION,
     INVALID,

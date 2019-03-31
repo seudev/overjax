@@ -13,7 +13,7 @@ public class TokenAuthentication {
     
     private static final TokenAuthentication PUBLIC_ACCESS = new TokenAuthentication(AuthenticationType.PUBLIC_ACCESS, null, null, null, null);
     private static final TokenAuthentication NO_AUTHENTICATION = new TokenAuthentication(AuthenticationType.NO_AUTHENTICATION, null, null, null, null);
-    private static final TokenAuthentication DENIED_ACCESS = new TokenAuthentication(AuthenticationType.DENIED_ACCESS, null, null, null, null);
+    private static final TokenAuthentication ACCESS_DENIED = new TokenAuthentication(AuthenticationType.ACCESS_DENIED, null, null, null, null);
     
     private final AuthenticationType RESULT_TYPE;
     private final Object TOKEN;
@@ -25,8 +25,8 @@ public class TokenAuthentication {
         return new TokenAuthentication(AUTHENTICATED, token, null, null, userRoles);
     }
     
-    public static TokenAuthentication deniedAccess() {
-        return DENIED_ACCESS;
+    public static TokenAuthentication accessDenied() {
+        return ACCESS_DENIED;
     }
     
     public static TokenAuthentication expired(Object token) {
