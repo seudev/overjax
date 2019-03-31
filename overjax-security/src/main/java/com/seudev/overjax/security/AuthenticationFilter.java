@@ -4,8 +4,8 @@ import static com.seudev.overjax.security.AuthenticationType.AUTHENTICATED;
 import static com.seudev.overjax.security.AuthenticationType.DENIED_ACCESS;
 import static com.seudev.overjax.security.AuthenticationType.EXPIRED;
 import static com.seudev.overjax.security.AuthenticationType.INVALID;
-import static com.seudev.overjax.security.AuthenticationType.LIBERATED_ACCESS;
 import static com.seudev.overjax.security.AuthenticationType.NO_AUTHENTICATION;
+import static com.seudev.overjax.security.AuthenticationType.PUBLIC_ACCESS;
 import static com.seudev.overjax.security.TokenAuthentication.deniedAccess;
 import static com.seudev.overjax.security.TokenAuthentication.invalid;
 import static com.seudev.overjax.security.TokenAuthentication.noAuthentication;
@@ -38,56 +38,56 @@ import com.seudev.overjax.annotation.Authentication;
 @RequestScoped
 @Priority(AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
-
-    @Inject
-    private Logger logger;
-
-    @Inject
-    private ResourceSecurityInfo resourceSecurityInfo;
-
-    @Inject
-    private SecurityInfo securityInfo;
     
     @Inject
-    private Instance<AuthenticationProvider> authenticationProvider;
+    private Logger logger;
+    
+    @Inject
+    private ResourceSecurityInfo resourceSecurityInfo;
+    
+    @Inject
+    private SecurityInfo securityInfo;
 
+    @Inject
+    private Instance<AuthenticationProvider> authenticationProvider;
+    
     @Inject
     @Authentication(DENIED_ACCESS)
     private Event<TokenAuthentication> deniedAccessEvent;
-
+    
     @Inject
-    @Authentication(LIBERATED_ACCESS)
-    private Event<TokenAuthentication> liberatedAccessEvent;
-
+    @Authentication(PUBLIC_ACCESS)
+    private Event<TokenAuthentication> publicAccessEvent;
+    
     @Inject
     @Authentication(NO_AUTHENTICATION)
     private Event<TokenAuthentication> noAuthenticationEvent;
-
+    
     @Inject
     @Authentication(INVALID)
     private Event<TokenAuthentication> invalidTokenEvent;
-
+    
     @Inject
     @Authentication(EXPIRED)
     private Event<TokenAuthentication> expiredTokenEvent;
-
+    
     @Inject
     @Authentication(AUTHENTICATED)
     private Event<TokenAuthentication> authenticatedUserEvent;
-
+    
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         if (resourceSecurityInfo.denyAll()) {
             denyRequest(requestContext);
         } else if (resourceSecurityInfo.permitAll()) {
-            liberatedAccess();
+            publicAccess();
         } else {
             AuthenticationProvider authenticationProvider = getAuthenticationProvider();
-
+            
             if (logger.isLoggable(FINE)) {
                 logger.log(FINE, "AuthenticationProvider: {0}", authenticationProvider.getClass().getName());
             }
-
+            
             try {
                 String tokenString = authenticationProvider.getToken(requestContext.getHeaderString(AUTHORIZATION));
                 if ((tokenString == null) || tokenString.isEmpty()) {
@@ -95,7 +95,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 } else {
                     TokenAuthentication tokenAuthentication = authenticationProvider.validate(tokenString);
                     AuthenticationType resultType = tokenAuthentication.getResultType();
-                    
+
                     switch (resultType) {
                         case AUTHENTICATED:
                             logger.fine("Authentication successful");
@@ -105,8 +105,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                         case DENIED_ACCESS:
                             denyRequest(requestContext);
                             break;
-                        case LIBERATED_ACCESS:
-                            liberatedAccess();
+                        case PUBLIC_ACCESS:
+                            publicAccess();
                             break;
                         default:
                             abortWithUnauthorized(requestContext, authenticationProvider, tokenAuthentication);
@@ -118,39 +118,39 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             }
         }
     }
-
+    
     private void abortWithUnauthorized(ContainerRequestContext requestContext, AuthenticationProvider authenticationProvider, TokenAuthentication tokenAuthentication) {
         securityInfo.setTokenAuthentication(tokenAuthentication);
-
+        
         AuthenticationType resultType = tokenAuthentication.getResultType();
         if (resultType == AUTHENTICATED) {
             throw new IllegalArgumentException("Invalid result type.");
         }
-
+        
         if (logger.isLoggable(FINE)) {
             logger.fine(tokenAuthentication.toString());
-
+            
             Throwable throwable = tokenAuthentication.getException();
             if (throwable != null) {
                 logger.log(FINE, throwable.getMessage(), throwable);
             }
             logger.fine("Aborting request");
         }
-
+        
         StringBuilder headerBuilder = new StringBuilder();
         headerBuilder.append(authenticationProvider.getAuthenticationScheme())
                 .append(" realm=\"").append(authenticationProvider.getRealm()).append("\"")
                 .append(", error=\"").append(resultType).append("\"");
-
+        
         String errorDetail = tokenAuthentication.getErrorDescription();
         if (errorDetail != null) {
             headerBuilder.append(", error_description=\"").append(errorDetail).append("\"");
         }
-
+        
         Response response = status(UNAUTHORIZED)
                 .header(WWW_AUTHENTICATE, headerBuilder.toString())
                 .build();
-
+        
         switch (resultType) {
             case NO_AUTHENTICATION:
                 noAuthenticationEvent.fire(tokenAuthentication);
@@ -163,7 +163,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
         requestContext.abortWith(response);
     }
-
+    
     private void denyRequest(ContainerRequestContext requestContext) {
         logger.fine("Denied request");
         TokenAuthentication tokenAuthentication = deniedAccess();
@@ -171,7 +171,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         deniedAccessEvent.fire(tokenAuthentication);
         requestContext.abortWith(status(UNAUTHORIZED).build());
     }
-
+    
     private AuthenticationProvider getAuthenticationProvider() {
         Named qualifier = resourceSecurityInfo.getAuthenticationProviderQualifier();
         if ((qualifier == null) || qualifier.value().isEmpty()) {
@@ -179,12 +179,12 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
         return authenticationProvider.select(qualifier).get();
     }
-
-    private void liberatedAccess() {
-        logger.fine("Liberated access");
-        TokenAuthentication tokenAuthentication = TokenAuthentication.liberatedAccess();
+    
+    private void publicAccess() {
+        logger.fine("Public access");
+        TokenAuthentication tokenAuthentication = TokenAuthentication.publicAccess();
         securityInfo.setTokenAuthentication(tokenAuthentication);
-        liberatedAccessEvent.fire(tokenAuthentication);
+        publicAccessEvent.fire(tokenAuthentication);
     }
-
+    
 }
