@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class TokenAuthentication {
     
-    private static final TokenAuthentication LIBERTATED_ACCESS = new TokenAuthentication(AuthenticationType.LIBERATED_ACCESS, null, null, null, null);
+    private static final TokenAuthentication PUBLIC_ACCESS = new TokenAuthentication(AuthenticationType.PUBLIC_ACCESS, null, null, null, null);
     private static final TokenAuthentication NO_AUTHENTICATION = new TokenAuthentication(AuthenticationType.NO_AUTHENTICATION, null, null, null, null);
     private static final TokenAuthentication DENIED_ACCESS = new TokenAuthentication(AuthenticationType.DENIED_ACCESS, null, null, null, null);
     
@@ -45,8 +45,8 @@ public class TokenAuthentication {
         return new TokenAuthentication(INVALID, token, errorDescription, exception, null);
     }
     
-    public static TokenAuthentication liberatedAccess() {
-        return LIBERTATED_ACCESS;
+    public static TokenAuthentication publicAccess() {
+        return PUBLIC_ACCESS;
     }
     
     public static TokenAuthentication noAuthentication() {
